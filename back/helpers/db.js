@@ -1,7 +1,7 @@
 import mysql from 'mysql';
-import {} from 'dotenv/config';
+import { } from 'dotenv/config';
 
-console.log(process.env.DB_HOST);
+console.log(process.env.DB_USER);
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
