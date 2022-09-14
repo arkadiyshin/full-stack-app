@@ -21,9 +21,7 @@ app.get("/", (req, res) => {
 
 /// in case path is not found, return the 'Not Found' 404 code
 app.use(function (req, res, next) {
-    const err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+    res.status(404).json({ flash: 'Not Found' });
 });
 
 // launch the node server

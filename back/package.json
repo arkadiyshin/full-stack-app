@@ -4,7 +4,7 @@
   "description": "Wild server",
   "main": "app.js",
   "type": "module",
-  "proxy": "http://localhost:6000/",
+  
   
   "scripts": {
     "start": "node app.js",
