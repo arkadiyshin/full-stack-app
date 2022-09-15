@@ -4,23 +4,15 @@ import { Grid, Snackbar, TextField, Button } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import {Link} from 'react-router-dom';
 
-function SignUp() {
+function SignIn() {
 
-    const [inputState, setInputState] = useState(
-        {
-            email: 'test@test.com',
-            password: '',
-            passwordconf: '',
-            name: '',
-            lastname: ''
-        }
-    );
-    const [snackbar, setSnackbar] = useState({ open: false, severity: '' });
+    const [inputState, setInputState] = useState({});
+    const [snackbar, setSnackbar] = useState({open: false, severity: ''});
 
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") return;
-        setSnackbar({ open: false, severity: '' });
+        setSnackbar({open: false, severity: ''});
     };
 
 
@@ -29,16 +21,16 @@ function SignUp() {
         event.preventDefault();
 
         // delete passwordconf and flash form body request
-        const { passwordconf, flash, ...data } = inputState;
+        const { flash, ...data } = inputState;
 
-        axios.post('/auth/signup', data)
+        axios.post('/auth/signin', data)
             .then(res => {
                 setInputState(prev => ({
                     ...prev, ...{
                         "flash": res.data.flash
                     }
                 }))
-                setSnackbar({ open: true, severity: 'success' });
+                setSnackbar({open: true, severity: 'success'});
                 console.log(snackbar);
             })
             .catch(err => {
@@ -48,7 +40,7 @@ function SignUp() {
                         "flash": err.response.data.flash
                     }
                 }))
-                setSnackbar({ open: true, severity: 'error' });
+                setSnackbar({open: true, severity: 'error'});
                 console.log(snackbar);
             })
 
@@ -68,12 +60,12 @@ function SignUp() {
             <Snackbar open={snackbar.open} autoHideDuration={6000} onClose={handleClose}>
                 <MuiAlert elevation={6} variant="filled" onClose={handleClose} severity={snackbar.severity}>
                     {JSON.stringify(inputState.flash)}
-                </MuiAlert>
+                </MuiAlert> 
             </Snackbar>
 
             <form onSubmit={submitHandler} >
-
-                <legend>Sign up!</legend>
+                
+                <legend>Sign in!</legend>
 
                 <Grid container alignItems='center'
                     justifyContent='center' spacing={2}>
@@ -85,25 +77,16 @@ function SignUp() {
                         <TextField fullWidth={true} label='password' type="password" name="password" value={inputState.password} onChange={changeInputHandler} />
                     </Grid>
                     <Grid item xs={12} >
-                        <TextField fullWidth={true} label='password confirm' type="password" name="passwordconf" value={inputState.passwordconf} onChange={changeInputHandler} />
+                        <Button type="submit" value="Submit" variant="contained" color="primary"> <Link to='/profile'> Sign In </Link> </Button>
                     </Grid>
-                    <Grid item xs={12} >
-                        <TextField fullWidth={true} label='name' type="text" name="name" value={inputState.name} onChange={changeInputHandler} />
-                    </Grid>
-                    <Grid item xs={12} >
-                        <TextField fullWidth={true} label='lastname' type="text" name="lastname" value={inputState.lastname} onChange={changeInputHandler} />
-                    </Grid>
-                    <Grid item xs={12} >
-                        <Button type="submit" value="Submit" variant="contained" color="primary"> <Link to='/'>Sign Up</Link> </Button>
-                    </Grid>
-                    <Grid item xs={12} >
-                        <Button type="submit" value="Submit" variant="text" color="primary"> <Link to='/signin'>Sign In</Link> </Button>
-                    </Grid>
+                        <Grid item xs={12} >
+                            <Button type="submit" value="Submit" variant="text" color="primary"> <Link to='/signup'>Sign Up</Link> </Button>
+                        </Grid>
                 </Grid>
             </form>
         </>
     )
 }
 
-export default SignUp;
+export default SignIn;
 
